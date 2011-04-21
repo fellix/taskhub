@@ -7,10 +7,11 @@ gem 'devise'
 gem 'carrierwave'
 gem 'haml-rails'
 gem 'rmagick'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda'
-  gem 'capybara'
+  gem 'capybara', :git => "git://github.com/jnicklas/capybara.git"
   gem 'factory_girl_rails'
 end

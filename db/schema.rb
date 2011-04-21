@@ -10,7 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110421151630) do
+ActiveRecord::Schema.define(:version => 20110421200920) do
+
+  create_table "lists", :force => true do |t|
+    t.string   "name",       :limit => 200,                   :null => false
+    t.boolean  "public",                    :default => true, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.integer  "list_id",                    :null => false
+    t.string   "title",       :limit => 200, :null => false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

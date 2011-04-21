@@ -2,6 +2,11 @@
 .welcome
   - if user_signed_in?
     %p= "Bem vindo #{current_user.name}"
+    %p= link_to "Criar uma nova lista", "#"
+    .my_lists
+      %p{:class => :warning} Nenhuma lista não cadstrada
+    .my_watchers
+      %p{:class => :warning} Nenhuma lista sendo observada
   - else
     %p= link_to "Registre-se", new_user_registration_path
     %p= link_to "Login", new_user_session_path

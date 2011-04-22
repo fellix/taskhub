@@ -7,7 +7,8 @@
       %h4 Minhas Listas
       = render("lists/list", :lists => @lists)
     .my_watchers
-      %p{:class => :warning} Nenhuma lista sendo observada
+      %h4 Minhas Listas Observadas
+      = render("lists/list", :lists => current_user.watched_lists)
     %p= link_to "Logout", destroy_user_session_path
   - else
     %p= link_to "Registre-se", new_user_registration_path

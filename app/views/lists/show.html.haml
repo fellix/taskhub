@@ -1,9 +1,11 @@
 .show_list
   %h1= @list.name
-  %p= "Essa é uma lista #{@list.status}"
+  - if @list.can_watch? current_user
+    %p= link_to "Observar", watch_list_path(@list)
+  %p= "Essa é uma lista #{@list.status} pertencente a #{@list.user_name}"
   .tasks_list
-    %h4 Tarefas
+    %h2 Tarefas
     - @list.tasks.each do |task|
       %div{:id => "task_#{task.id}", :class => "task"}
-        %p= task.title
+        %h4= task.title
         %p= task.description

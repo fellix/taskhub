@@ -4,6 +4,8 @@ Takshub::Application.routes.draw do
 
   root :to => "home#index"
   resources :lists
+  match 'user/:user_id/list/:id' => "lists#show", :as => "user_list"
+  match 'lists/:id/watch' => "lists#watch", :as => "watch_list"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

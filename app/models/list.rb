@@ -18,4 +18,13 @@ class List < ActiveRecord::Base
     return true if public
     user.id == user_id
   end
+
+  def can_watch?(user_id)
+    current_user = User.find(user_id)
+    self.user != current_user && !current_user.watched_lists_id.include?(self.id)
+  end
+
+  def user_name
+    user.name
+  end
 end

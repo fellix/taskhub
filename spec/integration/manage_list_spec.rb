@@ -13,6 +13,7 @@ feature "manages a list" do
     create_a_list
     page.should have_content("Coisas a fazer")
   end
+
   scenario "viewing data from a list" do
     create_a_list
     click_link "Coisas a fazer"
@@ -22,7 +23,7 @@ feature "manages a list" do
   scenario "can't view a list when has not logged in" do
     create_a_list
     logout
-    visit 'lists/1'
+    visit '/lists/1'
     page.should have_content("Sign in")
   end
 
@@ -30,8 +31,41 @@ feature "manages a list" do
     create_a_list
     logout
     login_as @other
-    visit 'lists/1'
+    visit '/lists/1'
     page.should have_content("Coisas a fazer")
+  end
+
+  scenario "can't view a private list from another user" do
+    create_a_list false
+    logout
+    login_as @other
+    visit '/lists/1'
+    page.should have_content("Acesso negado")
+  end
+
+  scenario "can't watch my lists" do
+    create_a_list
+    click_link "Coisas a fazer"
+    page.should_not have_content("Observar")
+  end
+
+  scenario "can watch a public list from another user" do
+    create_a_list
+    logout
+    login_as @other
+    visit '/lists/1'
+    click_link "Observar"
+    page.should have_content("Coisas a fazer")
+  end
+
+  scenario "can't watch a list two times" do
+    create_a_list
+    logout
+    login_as @other
+    visit '/lists/1'
+    click_link "Observar"
+    visit '/lists/1'
+    page.should_not have_content("Observar")
   end
 
   def create_a_list(public=true)

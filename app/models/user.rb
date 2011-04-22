@@ -5,11 +5,17 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lists
+  has_many :watches
+  has_many :watched_lists, :class_name => "List" , :through => :watches, :source => :list
   validates :name, :presence => true, :length => { :maximum => 200 }
   mount_uploader :avatar, AvatarUploader
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :avatar
+
+  def watched_lists_id
+    watched_lists.map(&:id)
+  end
 
   def to_s
     name

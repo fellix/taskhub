@@ -21,7 +21,6 @@ class ListsController < ApplicationController
 
   def show
     @list = List.find params[:id]
-    puts "here"
     unless @list.can_access?(current_user.id)
       redirect_to(root_path, :notice => "Acesso negado")
       return
@@ -29,4 +28,14 @@ class ListsController < ApplicationController
     respond_with @list
   end
 
+  def watch
+    @list = List.find params[:id]
+    @watch = Watch.new :user => current_user, :list => @list
+    if @watch.save
+      redirect_to root_path
+    else
+      flash[:error] = "Erro adicionando observador"
+      render :show
+    end
+  end
 end

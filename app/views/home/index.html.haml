@@ -2,11 +2,13 @@
 .welcome
   - if user_signed_in?
     %p= "Bem vindo #{current_user.name}"
-    %p= link_to "Criar uma nova lista", "#"
+    %p= link_to "Criar uma nova lista de tarefas", new_list_path
     .my_lists
-      %p{:class => :warning} Nenhuma lista não cadstrada
+      %h4 Minhas Listas
+      = render("lists/list", :lists => @lists)
     .my_watchers
       %p{:class => :warning} Nenhuma lista sendo observada
+    %p= link_to "Logout", destroy_user_session_path
   - else
     %p= link_to "Registre-se", new_user_registration_path
     %p= link_to "Login", new_user_session_path

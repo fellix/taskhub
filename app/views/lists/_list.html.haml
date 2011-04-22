@@ -1,0 +1,6 @@
+- if lists.empty?
+  %p{:class => :warning}= "Sem listas de tarefas"
+- else
+  - lists.each do |list|
+    %div{:class => :show_list}
+      = link_to list.name, list_path(list)

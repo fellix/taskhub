@@ -1,0 +1,27 @@
+%h1 Criar uma nova lista de tarefas
+- if @list.errors.any?
+  .errors
+    %ul
+      - @list.errors.full_messages do |msg|
+        %li= msg
+
+= form_for @list do |f|
+  = f.hidden_field :user_id, :value => current_user.id
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+  %p
+    = f.check_box :public
+    = f.label :public
+  %h4 Tarefas
+  = f.fields_for :tasks do |builder|
+    = render('lists/task_fields', :f => builder)
+
+  %p
+    = link_to_add_fields "Adicionar Tarefa", f, :tasks
+
+  %p= f.submit "Salvar"
+
+
+%p= link_to "Home", root_path

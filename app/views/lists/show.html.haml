@@ -1,0 +1,9 @@
+.show_list
+  %h1= @list.name
+  %p= "Essa é uma lista #{@list.status}"
+  .tasks_list
+    %h4 Tarefas
+    - @list.tasks.each do |task|
+      %div{:id => "task_#{task.id}", :class => "task"}
+        %p= task.title
+        %p= task.description
